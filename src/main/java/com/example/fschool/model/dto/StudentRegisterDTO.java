@@ -43,7 +43,7 @@ public class StudentRegisterDTO  {
      * 0表示女，1表示男
      */
     @TableField("student_sex")
-    private Byte studentSex;
+    private Integer studentSex;
 
 
 }

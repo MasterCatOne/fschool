@@ -67,7 +67,7 @@ public class Teachers implements Serializable {
      * 0表示女，1表示男
      */
     @TableField("teacher_sex")
-    private Byte teacherSex;
+    private Integer teacherSex;
 
     /**
      * 盐，用于个人敏感信息处理

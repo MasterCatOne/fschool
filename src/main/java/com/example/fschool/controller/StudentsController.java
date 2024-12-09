@@ -3,6 +3,7 @@ package com.example.fschool.controller;
 import com.example.fschool.model.dto.StudentLoginDTO;
 import com.example.fschool.model.dto.StudentRegisterDTO;
 import com.example.fschool.model.po.Students;
+import com.example.fschool.model.query.StudentPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.StudentsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,13 @@ public class StudentsController {
     @PostMapping("/login")
     public ResponseVO login(@RequestBody StudentLoginDTO loginDTO) {
         return studentsService.login(loginDTO);
+    }
+    /**
+     * 分页查询
+     * @param pageQuery 分页查询对象
+     */
+    @GetMapping("/page")
+    public ResponseVO queryUserPage(StudentPageQuery pageQuery){
+        return studentsService.queryUserPage(pageQuery);
     }
 }

@@ -1,10 +1,13 @@
 package com.example.fschool.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.fschool.model.dto.StudentLoginDTO;
 import com.example.fschool.model.dto.StudentRegisterDTO;
 import com.example.fschool.model.po.Students;
 import com.example.fschool.mapper.StudentsMapper;
+import com.example.fschool.model.query.StudentPageQuery;
+import com.example.fschool.model.vo.PageVO;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.IStudentsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,6 +17,8 @@ import com.example.fschool.utils.RandomUtils;
 import com.example.fschool.utils.ResponseEnum;
 import net.minidev.json.JSONUtil;
 import org.apache.commons.codec.digest.Md5Crypt;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +74,22 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
 
             return ResponseVO.setResult(ResponseEnum.ACCOUNT_UNREGISTER);//未注册
         }
+    }
+
+    /**
+     * 分页查询用户列表
+     * @param pageQuery 查询参数
+     * @return 分页信息
+     */
+    @Override
+    public ResponseVO queryUserPage(StudentPageQuery pageQuery) {
+        Page<Students> sort = pageQuery.toMpPageDefaultSortByCreateTimeDesc();
+        Page<Students> page = lambdaQuery().eq(ObjectUtils.isNotEmpty(pageQuery.getXuehao()),Students::getXuehao, pageQuery.getXuehao())
+                .like(StringUtils.isNotBlank(pageQuery.getStudentName()),Students::getStudentName, pageQuery.getStudentName())
+                .page(sort);
+        PageVO<Students> userPageVo = new PageVO<>();
+        userPageVo.of(page);
+        return ResponseVO.ok().data("items",userPageVo);
     }
 
     private boolean checkUnique(String xuehao) {

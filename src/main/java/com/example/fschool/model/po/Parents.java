@@ -61,7 +61,7 @@ public class Parents implements Serializable {
      * 0表示女，1表示男
      */
     @TableField("parent_sex")
-    private Byte parentSex;
+    private Integer parentSex;
 
     /**
      * 盐，用于个人敏感信息处理

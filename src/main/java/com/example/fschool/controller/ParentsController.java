@@ -1,13 +1,13 @@
 package com.example.fschool.controller;
 
+import com.example.fschool.model.dto.ParentLoginDTO;
+import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.News;
 import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.ParentsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +31,22 @@ public class ParentsController {
         List<Parents> list = parentsService.list();
         return ResponseVO.ok().data("list",list);
     }
+    /**
+     * 家长注册
+     */
+    @PostMapping("/register")
+    public ResponseVO register(@RequestBody ParentRegisterDTO parentRegisterDTO) {
+
+
+       return parentsService.register(parentRegisterDTO);
+    }
+    /**
+     * 家长登录
+     */
+    @PostMapping ("/login")
+    public ResponseVO login(@RequestBody ParentLoginDTO parentLoginDTO) {
+        return parentsService.login(parentLoginDTO);
+    }
+
 
 }

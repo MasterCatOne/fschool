@@ -1,5 +1,6 @@
 package com.example.fschool.utils;
 
+import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.po.Students;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -31,7 +32,7 @@ public class JWTUtil {
     private static final String SUBJECT = "fschool";
 
     /**
-     * 根据用户信息，生成令牌
+     * 根据学生信息，生成令牌
      *
      * @param students 用户信息
      * @return
@@ -56,7 +57,32 @@ public class JWTUtil {
         token = TOKEN_PREFIX + token;
         return token;
     }
+    /**
+     * 根据家长信息，生成令牌
+     *
+     * @param parents 用户信息
+     * @return
+     */
+    public static String geneJsonWebTokenParent(Parents parents) {
 
+        if (parents == null) {
+            throw new NullPointerException("user对象为空");
+        }
+
+        String token = Jwts.builder().setSubject(SUBJECT)
+                //payload
+                .claim("parent_id", parents.getParentId())
+                .claim("parent_name", parents.getParentName())
+                //设置发布时间
+                .setIssuedAt(new Date())
+                //设置过期时间
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                //设置加密算法
+                .signWith(SignatureAlgorithm.HS256, SECRET).compact();
+        //拼装
+        token = TOKEN_PREFIX + token;
+        return token;
+    }
     /**
      * 校验token的方法
      *
