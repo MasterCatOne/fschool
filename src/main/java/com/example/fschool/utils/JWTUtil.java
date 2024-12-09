@@ -1,7 +1,9 @@
 package com.example.fschool.utils;
 
+import com.example.fschool.model.po.Managers;
 import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.po.Students;
+import com.example.fschool.model.po.Teachers;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -73,6 +75,60 @@ public class JWTUtil {
                 //payload
                 .claim("parent_id", parents.getParentId())
                 .claim("parent_name", parents.getParentName())
+                //设置发布时间
+                .setIssuedAt(new Date())
+                //设置过期时间
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                //设置加密算法
+                .signWith(SignatureAlgorithm.HS256, SECRET).compact();
+        //拼装
+        token = TOKEN_PREFIX + token;
+        return token;
+    }
+
+    /**
+     * 根据老师信息，生成令牌
+     *
+     * @param teachers 用户信息
+     * @return
+     */
+    public static String geneJsonWebTokenTeacher(Teachers teachers) {
+
+        if (teachers == null) {
+            throw new NullPointerException("user对象为空");
+        }
+
+        String token = Jwts.builder().setSubject(SUBJECT)
+                //payload
+                .claim("teacher_id", teachers.getTeacherId())
+                .claim("teacher_name", teachers.getTeacherName())
+                //设置发布时间
+                .setIssuedAt(new Date())
+                //设置过期时间
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
+                //设置加密算法
+                .signWith(SignatureAlgorithm.HS256, SECRET).compact();
+        //拼装
+        token = TOKEN_PREFIX + token;
+        return token;
+    }
+
+    /**
+     * 根据管理员信息，生成令牌
+     *
+     * @param managers 用户信息
+     * @return
+     */
+    public static String geneJsonWebTokenManager(Managers managers) {
+
+        if (managers == null) {
+            throw new NullPointerException("user对象为空");
+        }
+
+        String token = Jwts.builder().setSubject(SUBJECT)
+                //payload
+                .claim("manager_id", managers.getManagerId())
+                .claim("manager_name", managers.getManagerName())
                 //设置发布时间
                 .setIssuedAt(new Date())
                 //设置过期时间

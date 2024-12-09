@@ -1,12 +1,12 @@
 package com.example.fschool.controller;
 
+import com.example.fschool.model.dto.ManagerLoginDTO;
+import com.example.fschool.model.dto.ManagerRegisterDTO;
 import com.example.fschool.model.po.Managers;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.ManagersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +29,20 @@ public class ManagersController {
     public ResponseVO list() {
         List<Managers> list = managersService.list();
         return ResponseVO.ok().data("list",list);
+    }
+    /**
+     * 管理员登录
+     */
+    @PostMapping("/login")
+    public ResponseVO login(@RequestBody ManagerLoginDTO managerLoginDTO) {
+        return managersService.login(managerLoginDTO);
+    }
+    /**
+     * 管理员注册
+     */
+    @PostMapping("/register")
+    public ResponseVO register(@RequestBody ManagerRegisterDTO managerRegisterDTO) {
+        return managersService.register(managerRegisterDTO);
     }
 
 }

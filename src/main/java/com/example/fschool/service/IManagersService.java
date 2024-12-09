@@ -1,7 +1,10 @@
 package com.example.fschool.service;
 
+import com.example.fschool.model.dto.ManagerLoginDTO;
+import com.example.fschool.model.dto.ManagerRegisterDTO;
 import com.example.fschool.model.po.Managers;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.fschool.model.vo.ResponseVO;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IManagersService extends IService<Managers> {
 
+    ResponseVO login(ManagerLoginDTO managerLoginDTO);
+
+    ResponseVO register(ManagerRegisterDTO managerRegisterDTO);
 }
