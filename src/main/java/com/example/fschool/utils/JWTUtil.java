@@ -49,6 +49,8 @@ public class JWTUtil {
                 //payload
                 .claim("student_id", students.getStudentId())
                 .claim("student_name", students.getStudentName())
+                .claim("xuehao",students.getXuehao())
+                .claim("role",students.getRole())
                 //设置发布时间
                 .setIssuedAt(new Date())
                 //设置过期时间
@@ -75,6 +77,8 @@ public class JWTUtil {
                 //payload
                 .claim("parent_id", parents.getParentId())
                 .claim("parent_name", parents.getParentName())
+                .claim("account",parents.getAccount())
+                .claim("role",parents.getRole())
                 //设置发布时间
                 .setIssuedAt(new Date())
                 //设置过期时间
@@ -102,6 +106,8 @@ public class JWTUtil {
                 //payload
                 .claim("teacher_id", teachers.getTeacherId())
                 .claim("teacher_name", teachers.getTeacherName())
+                .claim("gonghao",teachers.getGonghao())
+                .claim("role",teachers.getRole())
                 //设置发布时间
                 .setIssuedAt(new Date())
                 //设置过期时间
@@ -129,6 +135,8 @@ public class JWTUtil {
                 //payload
                 .claim("manager_id", managers.getManagerId())
                 .claim("manager_name", managers.getManagerName())
+                .claim("account",managers.getAccount())
+                .claim("role",managers.getRole())
                 //设置发布时间
                 .setIssuedAt(new Date())
                 //设置过期时间

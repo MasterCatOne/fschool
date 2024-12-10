@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StudentLoginBo {
-    @TableField("student_id")
+public class ManagerLoginBo {
+    @TableField("manager_id")
     private String studentID;
-    @TableField("student_name")
+    @TableField("manager_name")
     private String studentName;
-    @TableField("xuehao")
-    private String xuehao;
+    @TableField("account")
+    private String account;
     private String role;
+
 }

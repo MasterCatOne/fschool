@@ -1,13 +1,34 @@
 package com.example.fschool.model.dto;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 
 @Data
 public class StudentRegisterDTO  {
+
+    /**
+     * 班级id
+     */
+    @TableField("class_id")
+    private Long classId;
+
+    /**
+     * 班主任id
+     */
+    @TableField("teacher_id")
+    private Long teacherId;
+
+    /**
+     * 家长id
+     */
+    @TableField("parent_id")
+    private Long parentId;
 
     /**
      * 姓名
@@ -28,12 +49,6 @@ public class StudentRegisterDTO  {
     private String studentPwd;
 
     /**
-     * 学号
-     */
-    @TableField("xuehao")
-    private String xuehao;
-
-    /**
      * 角色
      */
     @TableField("role")
@@ -44,6 +59,12 @@ public class StudentRegisterDTO  {
      */
     @TableField("student_sex")
     private Integer studentSex;
+
+    /**
+     * 学号
+     */
+    @TableField("xuehao")
+    private String xuehao;
 
 
 }

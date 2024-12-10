@@ -1,6 +1,6 @@
     package com.example.fschool.handler;
 
-    //import com.example.fschool.model.bo.StudentLoginBo;
+    import com.example.fschool.model.bo.ParentLoginBo;
     import com.example.fschool.model.bo.StudentLoginBo;
     import com.example.fschool.utils.BusinessException;
     import com.example.fschool.utils.JWTUtil;
@@ -15,16 +15,16 @@
     import javax.servlet.http.HttpServletResponse;
 
     /**
-     * @Description 登录拦截器
+     * @Description 家长登录拦截器
      * @Author novel
      * @Version 1.0
      **/
 
     @Slf4j
-    public class LoginInterceptor implements HandlerInterceptor {
+    public class ParentLoginInterceptor implements HandlerInterceptor {
 
 
-        public static ThreadLocal<StudentLoginBo> threadLocal = new ThreadLocal<>();
+        public static ThreadLocal<ParentLoginBo> threadLocal = new ThreadLocal<>();
 
 
         @Override
@@ -45,26 +45,26 @@
                     //return false;
                 }
                 String role = (String) claims.get("role");
-                if("student".equals(role)){
-                    long userId = Long.valueOf(claims.get("student_id").toString());
-                    System.out.println("我是userID"+userId);
-                    String username = (String) claims.get("student_name");
-                    String xuehao = (String) claims.get("xuehao");
-                    StudentLoginBo studentLoginBo = StudentLoginBo
+                if("parent".equals(role)){
+                    long parentId = Long.valueOf(claims.get("parent_id").toString());
+                    System.out.println("我是parentID"+parentId);
+                    String parentName = (String) claims.get("parent_name");
+                    String account = (String) claims.get("account");
+                    ParentLoginBo parentLoginBo = ParentLoginBo
                             .builder()
-                            .studentID(String.valueOf(userId))
-                            .studentName(username)
-                            .xuehao(xuehao)
+                            .parentID(String.valueOf(parentId))
+                            .parentName(parentName)
+                            .account(account)
                             .build();
-                    threadLocal.set(studentLoginBo);
-                    if (requestURI.startsWith("/api/managers") || requestURI.startsWith("/api/teachers")||requestURI.startsWith("/api/parents")) {
+                    threadLocal.set(parentLoginBo);
+                    if (requestURI.startsWith("/api/managers") || requestURI.startsWith("/api/teachers")) {
                         // 拒绝访问
                         response.setStatus(HttpServletResponse.SC_FORBIDDEN); // 403 Forbidden
                         throw new BusinessException(ResponseEnum.ACCESS_DENIED);
                     }
+
                 }
                 return true;
-
             }
             throw new BusinessException(ResponseEnum.ACCOUNT_UNLOGIN);
             //未登录返回false
