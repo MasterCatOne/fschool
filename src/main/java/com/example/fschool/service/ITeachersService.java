@@ -1,5 +1,6 @@
 package com.example.fschool.service;
 
+import com.example.fschool.model.dto.TeacherDTO;
 import com.example.fschool.model.dto.TeacherLoginDTO;
 import com.example.fschool.model.dto.TeacherRegisterDTO;
 import com.example.fschool.model.po.Teachers;
@@ -27,4 +28,5 @@ public interface ITeachersService extends IService<Teachers> {
     List<Teachers> getTeacherList(Long teacherId);
 
 
+    ResponseVO updateByIdYa(TeacherDTO teacherDTO);
 }

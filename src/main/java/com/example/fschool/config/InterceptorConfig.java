@@ -41,9 +41,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/api/*/**")
                 //排查不拦截的路径
                 .excludePathPatterns("/api/*/register", "/api/*/login","/api/*/list","/api/*/page","/api/*/update","/api/*/delete/{id}");
-
 //
-
     }
 }
 

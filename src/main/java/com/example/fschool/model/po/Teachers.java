@@ -1,9 +1,7 @@
 package com.example.fschool.model.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -92,6 +90,7 @@ public class Teachers implements Serializable {
     /**
      * 删除标记（1:不可用 0:可用）
      */
+    @TableLogic
     @TableField("is_deleted")
     private Byte isDeleted;
 

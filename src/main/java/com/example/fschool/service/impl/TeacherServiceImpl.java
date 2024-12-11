@@ -3,12 +3,14 @@ package com.example.fschool.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.fschool.mapper.TeachersMapper;
+import com.example.fschool.model.dto.TeacherDTO;
 import com.example.fschool.model.dto.TeacherLoginDTO;
 import com.example.fschool.model.dto.TeacherRegisterDTO;
 import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.po.Students;
 import com.example.fschool.model.po.Teachers;
 import com.example.fschool.model.vo.ResponseVO;
+import com.example.fschool.model.vo.TeacherVO;
 import com.example.fschool.service.ITeachersService;
 import com.example.fschool.utils.BusinessException;
 import com.example.fschool.utils.JWTUtil;
@@ -70,6 +72,25 @@ public class TeacherServiceImpl extends ServiceImpl<TeachersMapper, Teachers> im
     @Override
     public List<Teachers> getTeacherList(Long teacherId) {
         return teachersMapper.getTeacherList(teacherId);
+    }
+
+    /**
+     * 教师的更新
+     * @param teacherDTO
+     * @return
+     */
+    @Override
+    public ResponseVO updateByIdYa(TeacherDTO teacherDTO) {
+        Teachers teachers=new Teachers();
+        BeanUtils.copyProperties(teacherDTO,teachers);
+        if(checkUnique(teachers.getGonghao())){
+            System.out.println("我是是否舒服舒服撒旦法撒旦法");
+            teachersMapper.updateById(teachers);
+            return ResponseVO.ok().message("更新成功");
+        }else{
+            return ResponseVO.setResult(ResponseEnum.UPDATE_FAILED);//用户已经存在
+        }
+
     }
 
 

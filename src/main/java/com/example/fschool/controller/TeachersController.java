@@ -1,6 +1,7 @@
 package com.example.fschool.controller;
 
 import com.example.fschool.mapper.TeachersMapper;
+import com.example.fschool.model.dto.TeacherDTO;
 import com.example.fschool.model.dto.TeacherLoginDTO;
 import com.example.fschool.model.dto.TeacherRegisterDTO;
 import com.example.fschool.model.po.Parents;
@@ -37,7 +38,7 @@ public class TeachersController {
         return ResponseVO.ok().data("list", list);
     }
     /**
-     * 获取教师列表2
+     * 获取教师列表获取到了相关老师下的学生2
      * @return
      */
     @RequestMapping("/list2/{id}")
@@ -59,6 +60,22 @@ public class TeachersController {
     @PostMapping("/login")
     public ResponseVO login(@RequestBody TeacherLoginDTO teacherRegisterDTO) {
         return teacherService.login(teacherRegisterDTO);
+    }
+    /**
+     * 教师的修改
+     */
+    @PutMapping("/update")
+    public ResponseVO update(@RequestBody TeacherDTO teacherDTO) {
+
+        return teacherService.updateByIdYa(teacherDTO);
+    }
+    /**
+     * 教师的删除
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseVO delete(@PathVariable("id") Long id) {
+        boolean b = teacherService.removeById(id);
+        return b?ResponseVO.ok():ResponseVO.error();
     }
 
 }

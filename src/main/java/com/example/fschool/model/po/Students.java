@@ -115,7 +115,9 @@ public class Students implements Serializable {
     private LocalDateTime updateTime;
     /**
      * 删除标记（1:不可用 0:可用）
+     *
      */
+    @TableLogic
     @TableField("is_deleted")
     private Byte isDeleted;
     /**
