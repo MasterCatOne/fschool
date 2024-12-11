@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ManagerLoginInterceptor implements HandlerInterceptor {
 
     public static ThreadLocal<ManagerLoginBo> threadLocal = new ThreadLocal<>();
+    //修改的部分
+    public static ThreadLocal<TeacherLoginBo> threadLocal2 = new ThreadLocal<>();
 
 
     @Override
@@ -41,17 +43,30 @@ public class ManagerLoginInterceptor implements HandlerInterceptor {
                 String managerName = (String) claims.get("manager_name");
                 String account = (String) claims.get("account");
 
-                ManagerLoginBo teacherLoginBo = ManagerLoginBo
+                ManagerLoginBo managerLoginBo = ManagerLoginBo
                         .builder()
                         .studentID(String.valueOf(managerId))
                         .studentName(managerName)
                         .account(account)
                         .build();
+                threadLocal.set(managerLoginBo);
+            }
 
-                threadLocal.set(teacherLoginBo);
+            if("teacher".equals(role)){
+                long teacherId = Long.valueOf(claims.get("teacher_id").toString());
+                String teacherName = (String) claims.get("teacher_name");
+                String gonghao = (String) claims.get("gonghao");
 
+                TeacherLoginBo teacherLoginBo = TeacherLoginBo
+                        .builder()
+                        .teacherId(String.valueOf(teacherId))
+                        .teacharName(teacherName)
+                        .gonghao(gonghao)
+                        .build();
+                threadLocal2.set(teacherLoginBo);
 
             }
+
             return true;
 
         }

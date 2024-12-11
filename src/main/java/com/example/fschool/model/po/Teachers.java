@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -98,5 +100,8 @@ public class Teachers implements Serializable {
      */
     @TableField("gonghao")
     private String gonghao;
+//    老师的学生
+    @TableField(exist = false)
+    private List<Students> studentsList;
 
 }

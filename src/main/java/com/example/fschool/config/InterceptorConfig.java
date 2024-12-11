@@ -35,32 +35,14 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 return true;
             }
         });
-        //        家长登录拦截器
-        registry.addInterceptor((new ParentLoginInterceptor()))
-                .addPathPatterns("/api/parents/**")
-                .addPathPatterns("/api/managers/list")
-                .addPathPatterns("/api/teachers/list")
-                .excludePathPatterns("/api/parents/register", "/api/parents/login");
 
-//       学生登录拦截器
+//       登录拦截器
         registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/api/managers/list")
-                .addPathPatterns("/api/teachers/list")
-                .addPathPatterns("/api/parents/list")
-                //拦截的路径
-                .addPathPatterns("/api/students/**")
+                .addPathPatterns("/api/*/**")
                 //排查不拦截的路径
-                .excludePathPatterns("/api/students/register", "/api/students/login");
+                .excludePathPatterns("/api/*/register", "/api/*/login","/api/*/list","/api/*/page");
 
-        //       管理员登录拦截器
-        registry.addInterceptor(new ManagerLoginInterceptor())
-                .addPathPatterns("/api/managers/**")
-                .excludePathPatterns("/api/managers/register", "/api/managers/login");
-        //       教师登录拦截器
-        registry.addInterceptor(new TeacherLoginInceptor())
-                .addPathPatterns("/api/managers/list")
-                .addPathPatterns("/api/teachers/**")
-                .excludePathPatterns("/api/teachers/register", "/api/teachers/login");
+//
 
     }
 }

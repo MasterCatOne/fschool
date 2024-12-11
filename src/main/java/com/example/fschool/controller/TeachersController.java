@@ -1,5 +1,6 @@
 package com.example.fschool.controller;
 
+import com.example.fschool.mapper.TeachersMapper;
 import com.example.fschool.model.dto.TeacherLoginDTO;
 import com.example.fschool.model.dto.TeacherRegisterDTO;
 import com.example.fschool.model.po.Parents;
@@ -24,6 +25,8 @@ import java.util.List;
 public class TeachersController {
     @Autowired
     private TeacherServiceImpl teacherService;
+    @Autowired
+    private TeachersMapper teachersMapper;
     /**
      * 获取教师列表
      * @return
@@ -33,6 +36,16 @@ public class TeachersController {
         List<Teachers> list = teacherService.list();
         return ResponseVO.ok().data("list", list);
     }
+    /**
+     * 获取教师列表2
+     * @return
+     */
+    @RequestMapping("/list2/{id}")
+    public ResponseVO list2(@PathVariable("id") Long teacherid) {
+        List<Teachers> teacherList = teacherService.getTeacherList(teacherid);
+        return ResponseVO.ok().data("list", teacherList);
+    }
+
     /**
      * 教师的注册
      */

@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import com.example.fschool.model.query.StudentPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,6 +20,7 @@ import com.example.fschool.model.vo.ResponseVO;
  * @since 2024-12-08
  */
 public interface IStudentsService extends IService<Students> {
+
 
     ResponseVO register(StudentRegisterDTO registerDTO);
 

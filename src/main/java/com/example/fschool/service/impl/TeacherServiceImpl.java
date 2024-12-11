@@ -25,11 +25,13 @@ import java.util.List;
 public class TeacherServiceImpl extends ServiceImpl<TeachersMapper, Teachers> implements ITeachersService {
     @Autowired
     private TeachersMapper teachersMapper;
+
+
     @Override
     public ResponseVO register(TeacherRegisterDTO teacherRegisterDTO) {
-        if(teacherRegisterDTO.getTeacherName()==null){
-            throw new BusinessException(ResponseEnum.REGISTER_FAIL);
-        }
+//        if(teacherRegisterDTO.getTeacherName()==null){
+//            throw new BusinessException(ResponseEnum.REGISTER_FAIL);
+//        }
         Teachers teachers = new Teachers();//new用户一个对象
         BeanUtils.copyProperties(teacherRegisterDTO, teachers);//拷贝值
         teachers.setSecret("$1$" + RandomUtils.getRandomString(6));//随机生成一个盐
@@ -64,6 +66,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeachersMapper, Teachers> im
             return ResponseVO.setResult(ResponseEnum.ACCOUNT_UNREGISTER);//未注册
         }
     }
+
+    @Override
+    public List<Teachers> getTeacherList(Long teacherId) {
+        return teachersMapper.getTeacherList(teacherId);
+    }
+
 
     private boolean checkUnique(String gonghao) {
         QueryWrapper queryWrapper = new QueryWrapper<Teachers>().eq("gonghao", gonghao);//创建查询条件

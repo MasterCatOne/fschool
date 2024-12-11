@@ -45,9 +45,9 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
 
     @Override
     public ResponseVO register(ParentRegisterDTO parentRegisterDTO) {
-        if(parentRegisterDTO.getParentName()==null){
-            throw new BusinessException(ResponseEnum.REGISTER_FAIL);
-        }
+//        if(parentRegisterDTO.getParentName()==null){
+//            throw new BusinessException(ResponseEnum.REGISTER_FAIL);
+//        }
         Parents parents = new Parents();//new用户一个对象
         BeanUtils.copyProperties(parentRegisterDTO, parents);//拷贝值
         parents.setSecret("$1$" + RandomUtils.getRandomString(6));//随机生成一个盐

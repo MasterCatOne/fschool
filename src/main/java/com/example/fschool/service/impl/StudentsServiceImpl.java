@@ -37,8 +37,11 @@ import java.util.List;
 public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> implements IStudentsService {
     @Autowired
     private StudentsMapper studentsMapper;
+
+
+
     public ResponseVO register(StudentRegisterDTO registerDTO) {
-        if(registerDTO.getStudentName()==null){
+        if(registerDTO.getXuehao()==null){
             throw new BusinessException(ResponseEnum.REGISTER_FAIL);
         }
         Students students = new Students();//new用户一个对象
