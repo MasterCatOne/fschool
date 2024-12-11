@@ -5,6 +5,7 @@ import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.News;
 import com.example.fschool.model.po.Parents;
+import com.example.fschool.model.query.ParentPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.ParentsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,12 @@ public class ParentsController {
     public ResponseVO delete(@PathVariable("id") Long id) {
         boolean b = parentsService.removeById(id);
         return b ? ResponseVO.ok() : ResponseVO.error();
+    }
+    /**
+     * 家长的分页查询
+     */
+    @GetMapping("/page")
+    public ResponseVO queryUserPage(ParentPageQuery pageQuery) {
+        return parentsService.queryParentPage(pageQuery);
     }
 }

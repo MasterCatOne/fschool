@@ -6,6 +6,7 @@ import com.example.fschool.model.dto.TeacherLoginDTO;
 import com.example.fschool.model.dto.TeacherRegisterDTO;
 import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.po.Teachers;
+import com.example.fschool.model.query.TeacherPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.ITeachersService;
 import com.example.fschool.service.impl.TeacherServiceImpl;
@@ -76,6 +77,13 @@ public class TeachersController {
     public ResponseVO delete(@PathVariable("id") Long id) {
         boolean b = teacherService.removeById(id);
         return b?ResponseVO.ok():ResponseVO.error();
+    }
+    /**
+     * 教师的分页查询
+     */
+    @GetMapping("/page")
+    public ResponseVO queryUserPage(TeacherPageQuery teacherPageQuery) {
+        return teacherService.queryTeacherPage(teacherPageQuery);
     }
 
 }

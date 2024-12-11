@@ -5,6 +5,7 @@ import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.Parents;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.fschool.model.query.ParentPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 
 /**
@@ -22,4 +23,6 @@ public interface IParentsService extends IService<Parents> {
     ResponseVO register(ParentRegisterDTO parentRegisterDTO);
 
     ResponseVO updateByIdYa(ParentDTO parentDTO);
+
+    ResponseVO queryParentPage(ParentPageQuery pageQuery);
 }

@@ -1,6 +1,7 @@
 package com.example.fschool.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.fschool.mapper.ParentsMapper;
 import com.example.fschool.model.dto.ParentDTO;
@@ -8,6 +9,8 @@ import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.po.Students;
+import com.example.fschool.model.query.ParentPageQuery;
+import com.example.fschool.model.vo.PageVO;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.IParentsService;
 import com.example.fschool.utils.BusinessException;
@@ -15,6 +18,8 @@ import com.example.fschool.utils.JWTUtil;
 import com.example.fschool.utils.RandomUtils;
 import com.example.fschool.utils.ResponseEnum;
 import org.apache.commons.codec.digest.Md5Crypt;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,6 +85,21 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
         }else{
             return ResponseVO.setResult(ResponseEnum.UPDATE_FAILED);
         }
+    }
+    /**
+     * 家长分页查询
+     * @param pageQuery
+     * @return
+     */
+    @Override
+    public ResponseVO queryParentPage(ParentPageQuery pageQuery) {
+        Page<Parents> sort = pageQuery.toMpPageDefaultSortByCreateTimeDesc();
+        Page<Parents> page = lambdaQuery().eq(StringUtils.isNotBlank(pageQuery.getAccount()),Parents::getAccount, pageQuery.getAccount())
+                .like(StringUtils.isNotBlank(pageQuery.getParentName()),Parents::getParentName, pageQuery.getParentName())
+                .page(sort);
+        PageVO<Parents> parentsPageVO = new PageVO<>();
+        parentsPageVO.of(page);
+        return ResponseVO.ok().data("items",parentsPageVO);
     }
 
     private boolean checkUnique(String account) {

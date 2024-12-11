@@ -1,6 +1,7 @@
 package com.example.fschool.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.fschool.mapper.TeachersMapper;
 import com.example.fschool.model.dto.TeacherDTO;
@@ -9,6 +10,9 @@ import com.example.fschool.model.dto.TeacherRegisterDTO;
 import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.po.Students;
 import com.example.fschool.model.po.Teachers;
+import com.example.fschool.model.query.ParentPageQuery;
+import com.example.fschool.model.query.TeacherPageQuery;
+import com.example.fschool.model.vo.PageVO;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.model.vo.TeacherVO;
 import com.example.fschool.service.ITeachersService;
@@ -17,6 +21,7 @@ import com.example.fschool.utils.JWTUtil;
 import com.example.fschool.utils.RandomUtils;
 import com.example.fschool.utils.ResponseEnum;
 import org.apache.commons.codec.digest.Md5Crypt;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,6 +98,21 @@ public class TeacherServiceImpl extends ServiceImpl<TeachersMapper, Teachers> im
 
     }
 
+    /**
+     * 家长分页查询
+     * @param pageQuery
+     * @return
+     */
+    @Override
+    public ResponseVO queryTeacherPage(TeacherPageQuery teacherPageQuery) {
+        Page<Teachers> sort = teacherPageQuery.toMpPageDefaultSortByCreateTimeDesc();
+        Page<Teachers> page = lambdaQuery().eq(StringUtils.isNotBlank(teacherPageQuery.getGonghao()),Teachers::getGonghao, teacherPageQuery.getGonghao())
+                .like(StringUtils.isNotBlank(teacherPageQuery.getTeacherName()),Teachers::getTeacherName, teacherPageQuery.getTeacherName())
+                .page(sort);
+        PageVO<Teachers> teachersPageVO = new PageVO<>();
+        teachersPageVO.of(page);
+        return ResponseVO.ok().data("items",teachersPageVO);
+    }
 
     private boolean checkUnique(String gonghao) {
         QueryWrapper queryWrapper = new QueryWrapper<Teachers>().eq("gonghao", gonghao);//创建查询条件
