@@ -9,4 +9,5 @@ import org.omg.CORBA.INTERNAL;
 public class StudentPageQuery extends PageQuery{
     private String xuehao;
     private String studentName;
+    private Long classId;
 }

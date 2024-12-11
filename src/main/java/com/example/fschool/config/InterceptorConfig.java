@@ -40,7 +40,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/api/*/**")
                 //排查不拦截的路径
-                .excludePathPatterns("/api/*/register", "/api/*/login","/api/*/list","/api/*/page");
+                .excludePathPatterns("/api/*/register", "/api/*/login","/api/*/list","/api/*/page","/api/*/update","/api/*/delete/{id}");
 
 //
 

@@ -2,6 +2,7 @@ package com.example.fschool.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.fschool.model.dto.StudentDTO;
 import com.example.fschool.model.dto.StudentLoginDTO;
 import com.example.fschool.model.dto.StudentRegisterDTO;
 import com.example.fschool.model.po.Students;
@@ -87,12 +88,30 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
     @Override
     public ResponseVO queryUserPage(StudentPageQuery pageQuery) {
         Page<Students> sort = pageQuery.toMpPageDefaultSortByCreateTimeDesc();
-        Page<Students> page = lambdaQuery().eq(ObjectUtils.isNotEmpty(pageQuery.getXuehao()),Students::getXuehao, pageQuery.getXuehao())
+        Page<Students> page = lambdaQuery().eq(StringUtils.isNotBlank(pageQuery.getXuehao()),Students::getXuehao, pageQuery.getXuehao())
                 .like(StringUtils.isNotBlank(pageQuery.getStudentName()),Students::getStudentName, pageQuery.getStudentName())
+                .like(ObjectUtils.isNotEmpty(pageQuery.getClassId()),Students::getClassId, pageQuery.getClassId())
                 .page(sort);
         PageVO<Students> userPageVo = new PageVO<>();
         userPageVo.of(page);
         return ResponseVO.ok().data("items",userPageVo);
+    }
+
+    /**
+     * 学生更新的业务
+     * @param studentDTO
+     * @return
+     */
+    @Override
+    public ResponseVO updateByidYa(StudentDTO studentDTO) {
+        Students students = new Students();
+        BeanUtils.copyProperties(studentDTO,students);
+        if (checkUnique(students.getXuehao())) {
+            studentsMapper.updateById(students);//保存用户信息
+            return ResponseVO.ok().message("更新成功");//返回成功
+        } else {
+            return ResponseVO.setResult(ResponseEnum.UPDATE_FAILED);//用户已经存在
+        }
     }
 
     private boolean checkUnique(String xuehao) {

@@ -59,12 +59,9 @@ public class StudentsController {
     /**
      * 修改学生信息
      */
-    @PutMapping("/update")
+        @PutMapping("/update")
     public ResponseVO update(@RequestBody StudentDTO studentDTO) {
-         Students students=new Students();
-         BeanUtils.copyProperties(studentDTO,students);
-         boolean b = studentsService.updateById(students);
-         return b?ResponseVO.ok():ResponseVO.error();
+            return studentsService.updateByidYa(studentDTO);
      }
     /**
      * 删除学生

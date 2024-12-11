@@ -1,5 +1,6 @@
 package com.example.fschool.service;
 
+import com.example.fschool.model.dto.StudentDTO;
 import com.example.fschool.model.dto.StudentLoginDTO;
 import com.example.fschool.model.dto.StudentRegisterDTO;
 import com.example.fschool.model.po.Students;
@@ -27,4 +28,6 @@ public interface IStudentsService extends IService<Students> {
     ResponseVO login(StudentLoginDTO loginDTO);
 
     ResponseVO queryUserPage(StudentPageQuery pageQuery);
+
+    ResponseVO updateByidYa(StudentDTO studentDTO);
 }
