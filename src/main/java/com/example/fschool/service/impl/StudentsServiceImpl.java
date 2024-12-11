@@ -107,6 +107,9 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
         Students students = new Students();
         BeanUtils.copyProperties(studentDTO,students);
         if (checkUnique(students.getXuehao())) {
+            students.setSecret("$1$" + RandomUtils.getRandomString(6));//随机生成一个盐
+            String pwd = Md5Crypt.md5Crypt(studentDTO.getStudentPwd().getBytes(), students.getSecret());//密码+盐 加密处理
+            students.setStudentPwd(pwd);//设置密码
             studentsMapper.updateById(students);//保存用户信息
             return ResponseVO.ok().message("更新成功");//返回成功
         } else {

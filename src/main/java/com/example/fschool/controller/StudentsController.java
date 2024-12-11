@@ -1,5 +1,6 @@
 package com.example.fschool.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.fschool.model.dto.StudentDTO;
 import com.example.fschool.model.dto.StudentLoginDTO;
 import com.example.fschool.model.dto.StudentRegisterDTO;
@@ -70,5 +71,16 @@ public class StudentsController {
     public ResponseVO delete(@PathVariable Long id) {
         boolean b = studentsService.removeById(id);
         return b?ResponseVO.ok():ResponseVO.error();
+    }
+    /**
+     * 查询某个学生信息
+     */
+    @GetMapping("/get/{xuehao}")
+    public ResponseVO getStudent(@PathVariable("xuehao") String xuehao) {
+        QueryWrapper queryWrapper=new QueryWrapper();
+        queryWrapper.eq("xuehao",xuehao);
+        Students one = studentsService.getOne(queryWrapper);
+
+        return ResponseVO.ok().data("item",one);
     }
 }

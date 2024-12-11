@@ -2,6 +2,8 @@ package com.example.fschool.service;
 
 import com.example.fschool.model.po.Classes;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.fschool.model.query.ClassPageQuery;
+import com.example.fschool.model.vo.ResponseVO;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IClassesService extends IService<Classes> {
 
+    ResponseVO queryHomeworkPage(ClassPageQuery classPageQuery);
 }
