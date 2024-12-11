@@ -1,12 +1,15 @@
 package com.example.fschool.controller;
 
+import com.example.fschool.model.dto.StudentDTO;
 import com.example.fschool.model.dto.StudentLoginDTO;
 import com.example.fschool.model.dto.StudentRegisterDTO;
 import com.example.fschool.model.po.Students;
 import com.example.fschool.model.query.StudentPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.StudentsServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,5 +55,23 @@ public class StudentsController {
     @GetMapping("/page")
     public ResponseVO queryUserPage(StudentPageQuery pageQuery){
         return studentsService.queryUserPage(pageQuery);
+    }
+    /**
+     * 修改学生信息
+     */
+    @PutMapping("/update")
+    public ResponseVO update(@RequestBody StudentDTO studentDTO) {
+         Students students=new Students();
+         BeanUtils.copyProperties(studentDTO,students);
+         boolean b = studentsService.updateById(students);
+         return b?ResponseVO.ok():ResponseVO.error();
+     }
+    /**
+     * 删除学生
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseVO delete(@PathVariable Long id) {
+        boolean b = studentsService.removeById(id);
+        return b?ResponseVO.ok():ResponseVO.error();
     }
 }
