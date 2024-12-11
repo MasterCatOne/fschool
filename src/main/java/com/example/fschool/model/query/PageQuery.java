@@ -2,6 +2,8 @@ package com.example.fschool.model.query;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.fschool.model.vo.ResponseVO;
+import com.example.fschool.service.impl.NewsServiceImpl;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -82,4 +84,6 @@ public class PageQuery {
     public <T> Page<T> toMpPageDefaultSortByCreateTimeDesc() {
         return toMpPage("create_time", false);
     }
+
+
 }
