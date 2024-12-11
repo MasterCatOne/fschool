@@ -3,6 +3,7 @@ package com.example.fschool.controller;
 import com.example.fschool.model.dto.ManagerLoginDTO;
 import com.example.fschool.model.dto.ManagerRegisterDTO;
 import com.example.fschool.model.po.Managers;
+import com.example.fschool.model.query.ManagerPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.ManagersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,20 @@ public class ManagersController {
     @PostMapping("/register")
     public ResponseVO register(@RequestBody ManagerRegisterDTO managerRegisterDTO) {
         return managersService.register(managerRegisterDTO);
+    }
+    /**
+     * 管理员的分页查询
+     */
+    @GetMapping("/page")
+    public ResponseVO queryUserPage(ManagerPageQuery managerPageQuery) {
+        return managersService.queryUserPage(managerPageQuery);
+    }
+    /**
+     * 管理员的删除
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseVO remove(@PathVariable Long id) {
+        return managersService.removeById(id) ? ResponseVO.ok() : ResponseVO.error();
     }
 
 }

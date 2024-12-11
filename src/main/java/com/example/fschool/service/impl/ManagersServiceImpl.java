@@ -1,12 +1,16 @@
 package com.example.fschool.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.fschool.model.dto.ManagerLoginDTO;
 import com.example.fschool.model.dto.ManagerRegisterDTO;
 import com.example.fschool.model.po.Managers;
 import com.example.fschool.mapper.ManagersMapper;
+import com.example.fschool.model.po.News;
 import com.example.fschool.model.po.Students;
 import com.example.fschool.model.po.Teachers;
+import com.example.fschool.model.query.ManagerPageQuery;
+import com.example.fschool.model.vo.PageVO;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.IManagersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,6 +19,7 @@ import com.example.fschool.utils.JWTUtil;
 import com.example.fschool.utils.RandomUtils;
 import com.example.fschool.utils.ResponseEnum;
 import org.apache.commons.codec.digest.Md5Crypt;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,6 +77,16 @@ public class ManagersServiceImpl extends ServiceImpl<ManagersMapper, Managers> i
         } else {
             return ResponseVO.setResult(ResponseEnum.USER_REPEAT);//用户已经存在
         }
+    }
+
+    @Override
+    public ResponseVO queryUserPage(ManagerPageQuery managerPageQuery) {
+        Page<Managers> sort = managerPageQuery.toMpPageDefaultSortByCreateTimeDesc();
+        Page<Managers> page = lambdaQuery().eq(StringUtils.isNotBlank(managerPageQuery.getManagerName()),Managers::getManagerName, managerPageQuery.getManagerName())
+                .page(sort);
+        PageVO<Managers> managersPageVO = new PageVO<>();
+        managersPageVO.of(page);
+        return ResponseVO.ok().data("items",managersPageVO);
     }
 
     private boolean checkUnique(String account) {
