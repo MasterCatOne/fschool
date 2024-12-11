@@ -3,6 +3,7 @@ package com.example.fschool.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.fschool.mapper.ParentsMapper;
+import com.example.fschool.model.dto.ParentDTO;
 import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.Parents;
@@ -61,6 +62,23 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
             return ResponseVO.ok().message("注册成功");//返回成功
         } else {
             return ResponseVO.setResult(ResponseEnum.USER_REPEAT);//用户已经存在
+        }
+    }
+
+    /**
+     * 家长的更新
+     * @param parentDTO
+     * @return
+     */
+    @Override
+    public ResponseVO updateByIdYa(ParentDTO parentDTO) {
+        Parents parents=new Parents();
+        BeanUtils.copyProperties(parentDTO,parents);
+        if(checkUnique(parents.getAccount())){
+            parentsMapper.updateById(parents);
+            return ResponseVO.ok().message("更新成功");
+        }else{
+            return ResponseVO.setResult(ResponseEnum.UPDATE_FAILED);
         }
     }
 

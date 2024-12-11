@@ -1,5 +1,6 @@
 package com.example.fschool.service;
 
+import com.example.fschool.model.dto.ParentDTO;
 import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.Parents;
@@ -19,4 +20,6 @@ public interface IParentsService extends IService<Parents> {
     ResponseVO login(ParentLoginDTO parentLoginDTO);
 
     ResponseVO register(ParentRegisterDTO parentRegisterDTO);
+
+    ResponseVO updateByIdYa(ParentDTO parentDTO);
 }

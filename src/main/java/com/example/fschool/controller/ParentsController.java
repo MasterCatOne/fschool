@@ -1,5 +1,6 @@
 package com.example.fschool.controller;
 
+import com.example.fschool.model.dto.ParentDTO;
 import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.News;
@@ -48,5 +49,19 @@ public class ParentsController {
         return parentsService.login(parentLoginDTO);
     }
 
-
+    /**
+     * 家长的更新
+     */
+    @PutMapping("/update")
+    public ResponseVO update(@RequestBody ParentDTO parentDTO) {
+        return parentsService.updateByIdYa(parentDTO);
+    }
+    /**
+     * 家长的删除
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseVO delete(@PathVariable("id") Long id) {
+        boolean b = parentsService.removeById(id);
+        return b ? ResponseVO.ok() : ResponseVO.error();
+    }
 }
