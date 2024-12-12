@@ -47,6 +47,11 @@ public class StudentDTO {
      */
     @TableField("student_age")
     private Integer studentAge;
+    /**
+     * 评论
+     */
+    @TableField("comment")
+    private String comment;
 
     /**
      * 学生密码

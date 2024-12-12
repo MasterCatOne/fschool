@@ -3,6 +3,7 @@ package com.example.fschool.model.po;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,11 +41,8 @@ public class Activitys implements Serializable {
     @TableField("activity_content")
     private String activityContent;
 
-    /**
-     * 活动时间
-     */
-    @TableField(value = "activity_time" ,fill = FieldFill.INSERT)
-    private LocalDateTime activityTime;
+    @TableField("activity_time")
+    private LocalDate activityTime;
 
     /**
      * 活动图片

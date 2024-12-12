@@ -61,5 +61,12 @@ public class HomeworksController {
     public ResponseVO queryUserPage(HomeworkPageQuery homeworkPageQuery) {
         return homeworksService.queryHomeworkPage(homeworkPageQuery);
     }
+    /**
+     * 根据作业id获取作业信息
+     */
+    @GetMapping("/getHomeworkById/{id}")
+    public ResponseVO getHomeworkById(@PathVariable Long id) {
+        return ResponseVO.ok().data("homework",homeworksService.getById(id));
+    }
 
 }

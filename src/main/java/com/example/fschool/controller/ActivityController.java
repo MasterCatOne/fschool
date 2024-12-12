@@ -1,5 +1,6 @@
 package com.example.fschool.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.fschool.model.dto.ActivityDTO;
 import com.example.fschool.model.po.Activitys;
 import com.example.fschool.model.vo.ResponseVO;
@@ -27,7 +28,9 @@ public class ActivityController {
      */
     @GetMapping("/list")
     public ResponseVO list(){
-        List<Activitys> list = activityService.list();
+        QueryWrapper<Activitys> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("activity_time"); // 按时间字段升序排序
+        List<Activitys> list = activityService.list(queryWrapper);
         return ResponseVO.ok().data("list",list);
     }
     /**

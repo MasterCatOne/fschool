@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -32,9 +33,9 @@ public class ActivityDTO {
     /**
      * 活动时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @TableField("activity_time")
-    private LocalDateTime activityTime;
+    private LocalDate activityTime;
 
     /**
      * 活动图片

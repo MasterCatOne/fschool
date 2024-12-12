@@ -57,6 +57,11 @@ public class News implements Serializable {
      */
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+    /**
+     * 新闻图片
+     */
+    @TableField("new_img")
+    private String newImg;
 
     /**
      * 逻辑删除字段	

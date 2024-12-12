@@ -25,6 +25,11 @@ public class NewsDTO {
      */
     @TableField("new_title")
     private String newTitle;
+    /**
+     * 新闻图片
+     */
+    @TableField("new_img")
+    private String newImg;
 
     /**
      * 新闻的内容
