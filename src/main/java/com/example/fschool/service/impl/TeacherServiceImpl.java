@@ -88,7 +88,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeachersMapper, Teachers> im
     public ResponseVO updateByIdYa(TeacherDTO teacherDTO) {
         Teachers teachers=new Teachers();
         BeanUtils.copyProperties(teacherDTO,teachers);
-        if(checkUnique(teachers.getGonghao())){
+        if(checkUpdateUnique(teachers.getGonghao())){
             System.out.println("我是是否舒服舒服撒旦法撒旦法");
             teachersMapper.updateById(teachers);
             return ResponseVO.ok().message("更新成功");
@@ -114,9 +114,24 @@ public class TeacherServiceImpl extends ServiceImpl<TeachersMapper, Teachers> im
         return ResponseVO.ok().data("items",teachersPageVO);
     }
 
+    /**
+     * 注册
+     * @param gonghao
+     * @return
+     */
     private boolean checkUnique(String gonghao) {
         QueryWrapper queryWrapper = new QueryWrapper<Teachers>().eq("gonghao", gonghao);//创建查询条件
         List<Teachers> list = teachersMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
         return list.size() > 0 ? false : true;//大于零返回false否则返回true
+    }
+    /**
+     * 更新
+     * @param gonghao
+     * @return
+     */
+    private boolean checkUpdateUnique(String gonghao) {
+        QueryWrapper queryWrapper = new QueryWrapper<Teachers>().eq("gonghao", gonghao);//创建查询条件
+        List<Teachers> list = teachersMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
+        return list.size() > 1 ? false : true;//大于零返回false否则返回true
     }
 }

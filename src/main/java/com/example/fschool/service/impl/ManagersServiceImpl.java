@@ -90,9 +90,24 @@ public class ManagersServiceImpl extends ServiceImpl<ManagersMapper, Managers> i
         return ResponseVO.ok().data("items",managersPageVO);
     }
 
+    /**
+     * 注册
+     * @param account
+     * @return
+     */
     private boolean checkUnique(String account) {
         QueryWrapper queryWrapper = new QueryWrapper<Managers>().eq("account", account);//创建查询条件
         List<Managers> list = managersMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
         return list.size() > 0 ? false : true;//大于零返回false否则返回true
+    }
+    /**
+     * 更新
+     * @param account
+     * @return
+     */
+    private boolean checkUpdateUnique(String account) {
+        QueryWrapper queryWrapper = new QueryWrapper<Managers>().eq("account", account);//创建查询条件
+        List<Managers> list = managersMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
+        return list.size() > 1 ? false : true;//大于零返回false否则返回true
     }
 }

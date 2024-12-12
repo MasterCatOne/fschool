@@ -53,7 +53,7 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
 
         //账号唯一性检查 123456@qq.com
 
-        if (checkUnique(students.getXuehao())) {
+        if (checkUpdateUnique(students.getXuehao())) {
             studentsMapper.insert(students);//保存用户信息
             return ResponseVO.ok().message("注册成功");//返回成功
         } else {
@@ -118,7 +118,23 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
         }
     }
 
+    /**
+     * 注册
+     * @param xuehao
+     * @return
+     */
     private boolean checkUnique(String xuehao) {
+        QueryWrapper queryWrapper = new QueryWrapper<Students>().eq("xuehao", xuehao);//创建查询条件
+        List<Students> list = studentsMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
+        return list.size() > 0 ? false : true;//大于零返回false否则返回true
+    }
+
+    /**
+     * 更新
+     * @param xuehao
+     * @return
+     */
+    private boolean checkUpdateUnique(String xuehao) {
         QueryWrapper queryWrapper = new QueryWrapper<Students>().eq("xuehao", xuehao);//创建查询条件
         List<Students> list = studentsMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
         return list.size() > 1 ? false : true;//大于零返回false否则返回true

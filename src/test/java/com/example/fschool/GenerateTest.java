@@ -19,7 +19,7 @@ public class GenerateTest {
                             .outputDir(finalProjectPath + "/src/main/java"); // 输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("com.novel.demo") // 设置父包名
+                    builder.parent("com.example.fschool") // 设置父包名
                             .entity("model.po") // 设置实体类包名
                             .mapper("mapper") // 设置 Mapper 接口包名
                             .service("service") // 设置 Service 接口包名
@@ -28,7 +28,7 @@ public class GenerateTest {
                             .pathInfo(Collections.singletonMap(OutputFile.xml, finalProjectPath + "/src/main/resources/mapper")); // 设置 Mapper XML 文件生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder // 设置需要生成的表名
+                    builder.addInclude("activity")// 设置需要生成的表名
                             .entityBuilder()
                             .enableFileOverride()
                             .idType(IdType.AUTO)// 设置id生成策略

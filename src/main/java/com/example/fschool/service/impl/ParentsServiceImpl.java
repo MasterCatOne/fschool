@@ -59,9 +59,7 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
         parents.setSecret("$1$" + RandomUtils.getRandomString(6));//随机生成一个盐
         String pwd = Md5Crypt.md5Crypt(parentRegisterDTO.getParentPwd().getBytes(), parents.getSecret());//密码+盐 加密处理
         parents.setParentPwd(pwd);//设置密码
-
         //账号唯一性检查 123456@qq.com
-
         if (checkUnique(parents.getAccount())) {
             parentsMapper.insert(parents);//保存用户信息
             return ResponseVO.ok().message("注册成功");//返回成功
@@ -79,7 +77,7 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
     public ResponseVO updateByIdYa(ParentDTO parentDTO) {
         Parents parents=new Parents();
         BeanUtils.copyProperties(parentDTO,parents);
-        if(checkUnique(parents.getAccount())){
+        if(checkUpdateUnique(parents.getAccount())){
             parentsMapper.updateById(parents);
             return ResponseVO.ok().message("更新成功");
         }else{
@@ -101,10 +99,23 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
         parentsPageVO.of(page);
         return ResponseVO.ok().data("items",parentsPageVO);
     }
-
+    /**
+     * 注册
+     *
+     */
     private boolean checkUnique(String account) {
         QueryWrapper queryWrapper = new QueryWrapper<Parents>().eq("account", account);//创建查询条件
         List<Parents> list = parentsMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
         return list.size() > 0 ? false : true;//大于零返回false否则返回true
+    }
+    /**
+     * 更新
+     * @param account
+     * @return
+     */
+    private boolean checkUpdateUnique(String account) {
+        QueryWrapper queryWrapper = new QueryWrapper<Parents>().eq("account", account);//创建查询条件
+        List<Parents> list = parentsMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
+        return list.size() > 1 ? false : true;//大于零返回false否则返回true
     }
 }

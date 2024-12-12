@@ -8,7 +8,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public enum ResponseEnum {
-
+    ADD_ACT_FAILED(-11, "活动重复,添加活动失败"),
+    UPDATE_ACT_FAILED(-11, "活动重复,更新活动失败"),
     SUCCESS(0, "成功"),
     ERROR(-1, "服务器内部错误"),
     ACCESS_DENIED(-2, "权限不足"),
