@@ -15,8 +15,15 @@ spring:
   mvc:
     static-path-pattern: /images/**
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      location: F:\experiment2\FamilySchool-backed\fschool\src\main\resources\static
 
-#执行了查询语句后在日志中显示出来
 mybatis-plus: #mybatis
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+

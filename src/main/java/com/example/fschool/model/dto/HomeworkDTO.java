@@ -37,6 +37,11 @@ public class HomeworkDTO {
      */
     @TableField("homework_content")
     private String homeworkContent;
+    /**
+     * 作业进度
+     */
+    @TableField("process")
+    private Integer process;
 
     /**
      * 截止日期

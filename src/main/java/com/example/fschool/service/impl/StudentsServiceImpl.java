@@ -106,6 +106,7 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
     public ResponseVO updateByidYa(StudentDTO studentDTO) {
         Students students = new Students();
         BeanUtils.copyProperties(studentDTO,students);
+        System.out.println("我是学号"+students.getXuehao());
         if (checkUnique(students.getXuehao())) {
             students.setSecret("$1$" + RandomUtils.getRandomString(6));//随机生成一个盐
             String pwd = Md5Crypt.md5Crypt(studentDTO.getStudentPwd().getBytes(), students.getSecret());//密码+盐 加密处理
@@ -120,6 +121,6 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
     private boolean checkUnique(String xuehao) {
         QueryWrapper queryWrapper = new QueryWrapper<Students>().eq("xuehao", xuehao);//创建查询条件
         List<Students> list = studentsMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
-        return list.size() > 0 ? false : true;//大于零返回false否则返回true
+        return list.size() > 1 ? false : true;//大于零返回false否则返回true
     }
 }

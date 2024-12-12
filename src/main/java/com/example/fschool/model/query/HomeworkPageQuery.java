@@ -8,4 +8,5 @@ import lombok.EqualsAndHashCode;
 public class HomeworkPageQuery extends PageQuery{
     private Long teacherId;
     private String homeworkTitle;
+    private Integer process;
 }

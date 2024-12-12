@@ -8,11 +8,18 @@ import com.example.fschool.model.po.Students;
 import com.example.fschool.model.query.StudentPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.StudentsServiceImpl;
+import com.example.fschool.utils.RandomUtils;
+import com.example.fschool.utils.SaveFile;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -60,10 +67,17 @@ public class StudentsController {
     /**
      * 修改学生信息
      */
-        @PutMapping("/update")
-    public ResponseVO update(@RequestBody StudentDTO studentDTO) {
-            return studentsService.updateByidYa(studentDTO);
-     }
+    @PutMapping("/update")
+    public ResponseVO update(@ModelAttribute StudentDTO studentDTO,
+                             @RequestParam(value = "photo",required = false) MultipartFile photo, HttpServletRequest request) throws IOException {
+        String realPath = "F:\\experiment2\\FamilySchool-backed\\fschool\\src\\main\\resources\\static";
+        System.out.println(realPath);
+        SaveFile.saveFile(photo, realPath);
+        String s = realPath +File.separator+ photo.getOriginalFilename();
+        studentDTO.setAvatar("images/"+photo.getOriginalFilename());
+        System.out.println(s);
+        return studentsService.updateByidYa(studentDTO);
+    }
     /**
      * 删除学生
      */
@@ -80,7 +94,6 @@ public class StudentsController {
         QueryWrapper queryWrapper=new QueryWrapper();
         queryWrapper.eq("xuehao",xuehao);
         Students one = studentsService.getOne(queryWrapper);
-
         return ResponseVO.ok().data("item",one);
     }
 }

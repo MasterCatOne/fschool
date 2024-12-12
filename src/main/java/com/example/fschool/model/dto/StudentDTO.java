@@ -53,6 +53,11 @@ public class StudentDTO {
      */
     @TableField("student_pwd")
     private String studentPwd;
+    /**
+     * 头像
+     */
+    @TableField("avatar")
+    private String avatar;
 
 
     /**

@@ -70,6 +70,11 @@ public class Homeworks implements Serializable {
      */
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+    /**
+     * 作业进度
+     */
+    @TableField("process")
+    private Integer process;
 
     /**
      * 逻辑删除字段	

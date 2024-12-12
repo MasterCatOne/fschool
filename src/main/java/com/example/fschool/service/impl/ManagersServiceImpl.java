@@ -83,6 +83,7 @@ public class ManagersServiceImpl extends ServiceImpl<ManagersMapper, Managers> i
     public ResponseVO queryUserPage(ManagerPageQuery managerPageQuery) {
         Page<Managers> sort = managerPageQuery.toMpPageDefaultSortByCreateTimeDesc();
         Page<Managers> page = lambdaQuery().eq(StringUtils.isNotBlank(managerPageQuery.getManagerName()),Managers::getManagerName, managerPageQuery.getManagerName())
+                .like(StringUtils.isNotBlank(managerPageQuery.getAccount()),Managers::getAccount, managerPageQuery.getAccount())
                 .page(sort);
         PageVO<Managers> managersPageVO = new PageVO<>();
         managersPageVO.of(page);

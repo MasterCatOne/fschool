@@ -1,13 +1,16 @@
 package com.example.fschool.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.fschool.model.dto.ParentDTO;
 import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
 import com.example.fschool.model.po.News;
 import com.example.fschool.model.po.Parents;
+import com.example.fschool.model.po.Students;
 import com.example.fschool.model.query.ParentPageQuery;
 import com.example.fschool.model.vo.ResponseVO;
 import com.example.fschool.service.impl.ParentsServiceImpl;
+import com.example.fschool.service.impl.StudentsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,8 @@ import java.util.List;
 public class ParentsController {
     @Autowired
     private ParentsServiceImpl parentsService;
+    @Autowired
+    private StudentsServiceImpl studentsService;
     /**
      * 获取家长列表
      */
@@ -72,4 +77,15 @@ public class ParentsController {
     public ResponseVO queryUserPage(ParentPageQuery pageQuery) {
         return parentsService.queryParentPage(pageQuery);
     }
+    /**
+     * 家长获取自己孩子的信息
+     */
+    @GetMapping("/getChild/{id}")
+    public ResponseVO getChildrenInfo(@PathVariable("id") Long id) {
+        QueryWrapper<Students> queryWrapper=new QueryWrapper();
+        queryWrapper.eq("parent_id",id);
+        List<Students> studentsList = studentsService.list(queryWrapper);
+        return ResponseVO.ok().data("list",studentsList);
+    }
+
 }
