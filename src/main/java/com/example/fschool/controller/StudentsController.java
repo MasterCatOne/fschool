@@ -68,16 +68,17 @@ public class StudentsController {
      * 修改学生信息
      */
     @PutMapping("/update")
-    public ResponseVO update(@ModelAttribute StudentDTO studentDTO,
-                             @RequestParam(value = "photo",required = false) MultipartFile photo, HttpServletRequest request) throws IOException {
+    public ResponseVO update(@RequestBody StudentDTO studentDTO ){
+//        , @RequestParam(value = "photo",required = false) MultipartFile photo, HttpServletRequest request)
         String realPath = "F:\\experiment2\\FamilySchool-backed\\fschool\\src\\main\\resources\\static";
         System.out.println(realPath);
-        SaveFile.saveFile(photo, realPath);
-        String s = realPath +File.separator+ photo.getOriginalFilename();
-        studentDTO.setAvatar("images/"+photo.getOriginalFilename());
-        System.out.println(s);
+//        SaveFile.saveFile(photo, realPath);
+//        String s = realPath +File.separator+ photo.getOriginalFilename();
+//        studentDTO.setAvatar("images/"+photo.getOriginalFilename());
+//        System.out.println(s);
         return studentsService.updateByidYa(studentDTO);
     }
+
     /**
      * 删除学生
      */

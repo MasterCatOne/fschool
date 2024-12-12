@@ -35,8 +35,7 @@ public class HomeworksController {
     public ResponseVO add(@RequestBody HomeworkDTO homeworkDTO) {
         Homeworks homeworks=new Homeworks();
         BeanUtils.copyProperties(homeworkDTO,homeworks);
-        boolean save = homeworksService.save(homeworks);
-        return save? ResponseVO.ok():ResponseVO.error();
+        return homeworksService.saveHomework(homeworks);
     }
     /**
      * 作业的删除
@@ -53,8 +52,7 @@ public class HomeworksController {
     public ResponseVO update(@RequestBody HomeworkDTO homeworkDTO) {
         Homeworks homeworks=new Homeworks();
         BeanUtils.copyProperties(homeworkDTO,homeworks);
-        boolean updateById = homeworksService.updateById(homeworks);
-        return updateById? ResponseVO.ok():ResponseVO.error();
+        return homeworksService.updateHomework(homeworks);
     }
     /**
      * 作业的分页查询

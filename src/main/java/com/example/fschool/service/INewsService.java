@@ -17,4 +17,8 @@ import com.example.fschool.service.impl.NewsServiceImpl;
 public interface INewsService extends IService<News> {
 
     ResponseVO queryNewsPage(NewPageQuery newPageQuery);
+
+    ResponseVO saveNews(News news);
+
+    ResponseVO updateNews(News news);
 }

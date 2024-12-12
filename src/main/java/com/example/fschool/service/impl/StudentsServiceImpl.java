@@ -53,7 +53,7 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
 
         //账号唯一性检查 123456@qq.com
 
-        if (checkUpdateUnique(students.getXuehao())) {
+        if (checkUnique(students.getXuehao())) {
             studentsMapper.insert(students);//保存用户信息
             return ResponseVO.ok().message("注册成功");//返回成功
         } else {
@@ -107,7 +107,7 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
         Students students = new Students();
         BeanUtils.copyProperties(studentDTO,students);
         System.out.println("我是学号"+students.getXuehao());
-        if (checkUnique(students.getXuehao())) {
+        if (checkUpdateUnique(students.getXuehao(), students.getStudentId())) {
             students.setSecret("$1$" + RandomUtils.getRandomString(6));//随机生成一个盐
             String pwd = Md5Crypt.md5Crypt(studentDTO.getStudentPwd().getBytes(), students.getSecret());//密码+盐 加密处理
             students.setStudentPwd(pwd);//设置密码
@@ -134,9 +134,16 @@ public class StudentsServiceImpl extends ServiceImpl<StudentsMapper, Students> i
      * @param xuehao
      * @return
      */
-    private boolean checkUpdateUnique(String xuehao) {
+    private boolean checkUpdateUnique(String xuehao,Long studentId) {
         QueryWrapper queryWrapper = new QueryWrapper<Students>().eq("xuehao", xuehao);//创建查询条件
         List<Students> list = studentsMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
-        return list.size() > 1 ? false : true;//大于零返回false否则返回true
+        if (list.size()>0){
+            if(!list.get(0).getStudentId().equals(studentId)){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return true;
     }
 }

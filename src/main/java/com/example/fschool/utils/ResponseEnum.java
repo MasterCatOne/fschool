@@ -8,6 +8,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public enum ResponseEnum {
+    ADD_NEW_FAILED(-10, "新闻标题已存在,添加新闻失败"),
     ADD_ACT_FAILED(-11, "活动重复,添加活动失败"),
     UPDATE_ACT_FAILED(-11, "活动重复,更新活动失败"),
     SUCCESS(0, "成功"),
@@ -60,7 +61,9 @@ public enum ResponseEnum {
     WEIXIN_CALLBACK_PARAM_ERROR(-601, "回调参数不正确"),
     WEIXIN_FETCH_ACCESSTOKEN_ERROR(-602, "获取access_token失败"),
     WEIXIN_FETCH_USERINFO_ERROR(-603, "获取用户信息失败"),
-    ;
+    UPDATE_NEW_FAILED(-11,"新闻标题重复，更新新闻失败" ),
+    HOMEWORK_REPEAT(-111,"作业重复，作业创建失败" ),
+    UPDATE_HOMEWORK_FAILED( -112,"作业重复，作业更新失败");
     private final Integer code;//状态码
     private final String message;//消息
 }

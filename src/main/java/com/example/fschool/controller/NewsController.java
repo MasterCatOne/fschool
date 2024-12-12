@@ -39,8 +39,7 @@ public class NewsController {
     public ResponseVO add(@RequestBody NewsDTO newsDTO) {
         News news=new News();
         BeanUtils.copyProperties(newsDTO,news);
-        boolean save = newsService.save(news);
-        return save?ResponseVO.ok():ResponseVO.error();
+        return newsService.saveNews(news);
     }
     /**
      * 新闻的删除方法
@@ -57,8 +56,7 @@ public class NewsController {
     public ResponseVO update(@RequestBody NewsDTO newsDTO) {
         News news=new News();
         BeanUtils.copyProperties(newsDTO,news);
-        boolean updateById = newsService.updateById(news);
-        return updateById?ResponseVO.ok():ResponseVO.error();
+        return newsService.updateNews(news);
     }
     /**
      * 新闻分页查询

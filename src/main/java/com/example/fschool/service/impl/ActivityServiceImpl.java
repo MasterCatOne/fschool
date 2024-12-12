@@ -48,7 +48,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activitys> 
 
     @Override
     public ResponseVO updateActivity(Activitys activitys) {
-        if(checkActivityTitle(activitys.getActivityTitle())){
+        if(checkActivityTitle(activitys.getActivityTitle(),activitys.getActivityId())){
             activityMapper.updateById(activitys);
             return ResponseVO.ok().message("更改活动成功");
         }else{
@@ -61,10 +61,17 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activitys> 
      * @param activityTitle
      * @return
      */
-    private boolean checkActivityTitle(String activityTitle) {
+    private boolean checkActivityTitle(String activityTitle,Long activityId) {
         QueryWrapper queryWrapper = new QueryWrapper<Activitys>().eq("activity_title", activityTitle);
         List<Activitys> list = activityMapper.selectList(queryWrapper);
-        return list.size() > 1 ? false : true;//大于零返回false否则返回true
+        if (list.size()>0){
+            if(!list.get(0).getActivityId().equals(activityId)){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return true;
     }
 
     /**

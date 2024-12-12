@@ -7,6 +7,7 @@ import com.example.fschool.mapper.ParentsMapper;
 import com.example.fschool.model.dto.ParentDTO;
 import com.example.fschool.model.dto.ParentLoginDTO;
 import com.example.fschool.model.dto.ParentRegisterDTO;
+import com.example.fschool.model.po.News;
 import com.example.fschool.model.po.Parents;
 import com.example.fschool.model.po.Students;
 import com.example.fschool.model.query.ParentPageQuery;
@@ -77,7 +78,7 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
     public ResponseVO updateByIdYa(ParentDTO parentDTO) {
         Parents parents=new Parents();
         BeanUtils.copyProperties(parentDTO,parents);
-        if(checkUpdateUnique(parents.getAccount())){
+        if(checkUpdateUnique(parents.getAccount(),parents.getParentId())){
             parentsMapper.updateById(parents);
             return ResponseVO.ok().message("更新成功");
         }else{
@@ -113,9 +114,16 @@ public class ParentsServiceImpl extends ServiceImpl<ParentsMapper, Parents> impl
      * @param account
      * @return
      */
-    private boolean checkUpdateUnique(String account) {
+    private boolean checkUpdateUnique(String account,Long parentId) {
         QueryWrapper queryWrapper = new QueryWrapper<Parents>().eq("account", account);//创建查询条件
         List<Parents> list = parentsMapper.selectList(queryWrapper); //查找数据库中是否有对应的账号
-        return list.size() > 1 ? false : true;//大于零返回false否则返回true
+        if (list.size()>0){
+            if(!list.get(0).getParentId().equals(parentId)){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        return true;
     }
 }
